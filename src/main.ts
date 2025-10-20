@@ -180,7 +180,9 @@ function main(): void {
   if (w1) {
     PrintWorker(w1);
   } else {
+    
     console.log('Worker not found');
+
   }
 
   console.log('\n 2.2: Визначення інтерфейсів для типів функцій, PrizeLogger demo ');
