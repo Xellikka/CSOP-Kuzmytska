@@ -1,45 +1,157 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const enum_1 = require("./enum");
-const workers_1 = require("./workers");
-const workerfunctions_1 = require("./workerfunctions");
-const customerfunctions_1 = require("./customerfunctions");
-// Демонстрація запуску
-console.log("Демонстрація запуску");
-const allWorkers = (0, workers_1.getAllWorkers)();
-console.log("1.1.3. Запустіть функцію getAllWorkers():");
-console.log(allWorkers);
-console.log("1.1.5. Запустіть функцію logFirstAvailable():");
-(0, workerfunctions_1.logFirstAvailable)(allWorkers);
-console.log("1.3.2. Виведіть name та surname робітників з категорії Developer:");
-// Фільтруємо за категорією Developer і виводимо ім'я та прізвище
-allWorkers
-    .filter(w => w.category === enum_1.Category.Developer)
-    .forEach(w => console.log(`${w.name} ${w.surname}`));
-console.log("1.3.3. Демонстрація роботи функції getWorkerByID():");
-const wById = (0, workerfunctions_1.getWorkerByID)(3);
-console.log("Працівник id=3:", wById);
-console.log("1.4.2. Оголосіть змінну myID строкового типу і викличте функцію зі значеннями *Ваше ім’я*, *порядковий номер у списку*:");
-const myID = (0, customerfunctions_1.createCustomerID)("Дар'я", 1);
-console.log("Прямий виклик myID:", myID);
-let idGenerator;
-idGenerator = (name, id) => `${name}-${id}`;
-console.log("1.4.3. Стрілочна функція idGenerator:", idGenerator("Дар'я", 2));
-idGenerator = customerfunctions_1.createCustomerID;
-console.log("1.4.4. Посилання на createCustomerID idGenerator:", idGenerator("Дар'я", 3));
-console.log("1.5.2. Внесіть зміни в функцію getWorkersSurnamesByCategory() і викличте без параметра:");
-const defaultCategorySurnames = (0, workerfunctions_1.getWorkersSurnamesByCategory)();
-(0, workerfunctions_1.logWorkersNames)(defaultCategorySurnames);
-console.log("1.5.3. Внесіть зміни в функцію logFirstAvailable() і викличте без параметра:");
-(0, workerfunctions_1.logFirstAvailable)();
-console.log("1.5.1. Виклик функції createCustomer() з одним, двома і трьома параметрами:");
-(0, customerfunctions_1.createCustomer)("Олег");
-(0, customerfunctions_1.createCustomer)("Любов", 28);
-(0, customerfunctions_1.createCustomer)("Надія", 20, "Київ");
-console.log("1.5.5. Оголошення myWorkers і виклик checkoutWorkers():");
-const myWorkers = (0, workerfunctions_1.checkoutWorkers)("Дар'я,", 1, 2, 3, 4);
-myWorkers.forEach((w) => console.log(`- ${w}`));
-console.log("Приклад з сheckoutWorkers(*Ваше ім’я*, *Номер за списком*, *Група*, *Хоббі*):");
-const myWorkers2 = (0, workerfunctions_1.checkoutWorkers)("Дар'я", 11, "ПП32", "малювання");
-myWorkers2.forEach((w) => console.log(`- ${w}`));
+// 2.1.2 Функція getAllWorkers(): вказує тип повернення — масив Worker
+function getAllWorkers() {
+    const workers = [
+        {
+            id: 1,
+            name: 'Danylo',
+            surname: 'Romanovych',
+            available: false,
+            salary: 1000,
+            markPrize: (msg) => { },
+        },
+        {
+            id: 2,
+            name: 'Pavlo',
+            surname: 'Skoropadskyi',
+            available: true,
+            salary: 1500,
+            markPrize: (msg) => { },
+        },
+        {
+            id: 3,
+            name: 'Mykola',
+            surname: 'Mikhnovsky',
+            available: true,
+            salary: 1600,
+            markPrize: (msg) => { },
+        },
+        {
+            id: 4,
+            name: 'Jarema',
+            surname: 'Vyshnevetskyi',
+            available: false,
+            salary: 1300,
+            markPrize: (msg) => { },
+        },
+    ];
+    return workers;
+}
+// 2.1.3 Функція getWorkerByID — повертає Worker | undefined
+function getWorkerByID(id) {
+    const workers = getAllWorkers();
+    return workers.find(w => w.id === id);
+}
+// 2.1.4 Функція PrintWorker — використовує інтерфейс Worker для параметра
+function PrintWorker(worker) {
+    console.log(`${worker.name} ${worker.surname} got salary ${worker.salary}.`);
+}
+//2.2. Робота з PrizeLogger (інтерфейси для функцій)
+let logPrize;
+function simplePrizeLogger(message) {
+    console.log(`PRIZE: ${message}`);
+}
+logPrize = simplePrizeLogger;
+const favoriteAuthor = {
+    name: 'Ursula Le Guin',
+    email: 'wizard.of.earthsea@gmail.com',
+    numBooksPublished: 13,
+};
+// закоментувати змінну favoriteLibrarianLiteral 
+// const favoriteLibrarianLiteral: Librarian = {
+// name: 'Elio',
+// email: 'elio.archivist@libraryrealm.org',
+// department: 'Ancient Manuscripts',
+// assistCustomer: (custName: string) => console.log(`Elio is assisting ${custName}`),
+// };
+//2.4. Інтерфейси для типів класів
+class UniversityLibrarian {
+    name;
+    email;
+    department;
+    constructor(name, email, department) {
+        this.name = name;
+        this.email = email;
+        this.department = department;
+    }
+    assistCustomer(custName) {
+        console.log(`${this.name} is assisting ${custName}`);
+    }
+}
+const favoriteLibrarian = new UniversityLibrarian('Natalia', 'natalia@gmail.com', 'Philosophy');
+//2.5. Створення та використання класів
+class ReferenceItem {
+    title;
+    year;
+    static department = 'Reference Department';
+    _publisher = '';
+    // закоментований старий код 
+    // title: string;
+    // year: number;
+    // constructor(t: string, y: number) {
+    //   this.title = t;
+    //   this.year = y;
+    //   console.log('Creating a new ReferenceItem ...');
+    // }
+    constructor(title, year) {
+        this.title = title;
+        this.year = year;
+        console.log('Creating a new ReferenceItem ...');
+    }
+    printItem() {
+        console.log(`${this.title} was published in ${this.year}`);
+        console.log(`Reference department: ${ReferenceItem.department}`);
+    }
+    get publisher() {
+        return this._publisher.toUpperCase();
+    }
+    set publisher(newPublisher) {
+        this._publisher = newPublisher;
+    }
+}
+class Encyclopedia extends ReferenceItem {
+    edition;
+    constructor(title, year, edition) {
+        super(title, year);
+        this.edition = edition;
+    }
+    printItem() {
+        super.printItem();
+        console.log(`Edition: ${this.edition} (${this.year})`);
+    }
+    printCitation() {
+        console.log(`${this.title} - ${this.year}`);
+    }
+}
+function main() {
+    console.log('2.1: Визначення інтерфейсу ');
+    const all = getAllWorkers();
+    console.log('All workers:', all.map(w => ({ id: w.id, name: w.name, surname: w.surname, available: w.available, salary: w.salary })));
+    console.log('\nGet worker with id=4:');
+    const w1 = getWorkerByID(4);
+    if (w1) {
+        PrintWorker(w1);
+    }
+    else {
+        console.log('Worker not found');
+    }
+    console.log('\n 2.2: Визначення інтерфейсів для типів функцій, PrizeLogger demo ');
+    logPrize('Congratulation!');
+    console.log('\n 2.3. Розширення інтерфейсів : Person / Author / Librarian');
+    console.log('Favorite author:', favoriteAuthor);
+    //favoriteLibrarianLiteral.assistCustomer('Oksana');
+    console.log('\n 2.4. Інтерфейси для типів класів: UniversityLibrarian class implementing Librarian');
+    favoriteLibrarian.assistCustomer('Ivan');
+    console.log('\n 2.5. Створення та використання класів & 2.6. Розширення класів : ReferenceItem and Encyclopedia');
+    // const ref = new ReferenceItem('Book of TS', 2024); //  закоментовано, бо ReferenceItem абстрактний
+    const refBook = new Encyclopedia('Encyclopedia of TS', 2024, 3);
+    refBook.publisher = 'Oxford Press';
+    console.log('Publisher (UPPER):', refBook.publisher);
+    refBook.printItem();
+    console.log('\n2.7: Створення абстрактних класів ');
+    refBook.printCitation();
+}
+// Запуск основний main
+main();
 //# sourceMappingURL=main.js.map
