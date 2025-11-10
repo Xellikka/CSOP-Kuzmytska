@@ -1,0 +1,5 @@
+<h2>Список товарів:</h2>
+<ul>
+  <li *ngFor="let product of products">{{product.name}} - {{product.price | number:'1.2-2'}} грн</li>
+</ul>
+<p><strong>Сума покупки: {{total | number:'1.2-2'}} грн</strong></p>

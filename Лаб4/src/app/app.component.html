@@ -1,0 +1,16 @@
+<div class="container">
+  <h1>Магазин товарів</h1>
+
+  <div class="form">
+    <label>Назва товару:</label>
+    <input type="text" [(ngModel)]="productName" placeholder="Введіть назву" />
+
+    <label>Ціна:</label>
+    <input type="text" [(ngModel)]="productPrice" placeholder="Введіть ціну" 
+           (input)="validatePrice()" />
+
+    <button (click)="addProduct()">Додати товар</button>
+  </div>
+
+  <child-comp [products]="products"></child-comp>
+</div>
