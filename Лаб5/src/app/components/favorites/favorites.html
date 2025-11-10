@@ -1,0 +1,15 @@
+<div>
+  <h4>Вибране ({{favorites.length}})</h4>
+  <div *ngIf="favorites.length===0" class="text-muted">Немає вибраних елементів</div>
+
+  <ul class="list-group" *ngIf="favorites.length">
+    <li class="list-group-item d-flex align-items-center" *ngFor="let f of favorites">
+      <img [src]="f.picture?.thumbnail" alt="" width="48" height="48" class="rounded-circle me-3"/>
+      <div class="flex-grow-1">
+        <div><strong>{{f.name.first}} {{f.name.last}}</strong></div>
+        <small class="text-muted">{{f.location.city}} • {{formatDate(f.dob.date)}}</small>
+      </div>
+      <button class="btn btn-sm btn-danger" (click)="remove(f.id)">Видалити</button>
+    </li>
+  </ul>
+</div>

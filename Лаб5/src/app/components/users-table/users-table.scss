@@ -1,0 +1,267 @@
+
+// === Базові Налаштування ===
+:host {
+  display: block;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #374151; 
+}
+
+// === Верхня Панель (Заголовок та Кнопка) ===
+.mb-3 {
+  margin-bottom: 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  h3 {
+    margin: 0;
+    font-weight: 700; 
+    color: #1e3a8a; 
+    border-bottom: 2px solid #e0e7ff;
+    padding-bottom: 0.5rem;
+  }
+
+  button {
+    min-width: 120px;
+    font-weight: 600;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    transition: all 0.2s;
+    background-color: #6366f1; 
+    border-color: #6366f1;
+    color: #ffffff;
+
+    &:hover {
+      background-color: #4f46e5;
+      border-color: #4f46e5;
+      transform: translateY(-1px);
+    }
+
+    &:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+  }
+}
+
+// === Повідомлення про Помилку/Завантаження ===
+.alert-danger {
+  background-color: #fee2e2;
+  color: #991b1b;
+  border-left: 5px solid #ef4444;
+  padding: 1rem;
+  border-radius: 8px;
+  margin-top: 1rem;
+}
+
+.loading-indicator {
+  padding: 1rem;
+  color: #6b7280;
+  text-align: center;
+  font-style: italic; 
+}
+
+/* Секція "Повідомлення про Помилку/Завантаження" */
+.alert-danger {
+  background-color: #fee2e2;
+  color: #991b1b;
+  border-left: 5px solid #ef4444;
+  padding: 1rem;
+  border-radius: 8px;
+  margin-top: 1rem;
+  font-weight: 500;
+}
+
+// === Таблиця ===
+table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  background-color: #fff;
+  border: none; // Прибираємо зовнішній бордер
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05); // Та ж м'яка тінь, що й у Favorites
+
+  thead {
+    background-color: #f3f4f6; // Світліший заголовок
+
+    th {
+      padding: 0.85rem 1rem;
+      text-align: left;
+      font-weight: 600;
+      color: #374151;
+      border-bottom: 2px solid #e5e7eb; // Легка нижня лінія
+    }
+  }
+
+  tbody {
+    tr {
+      transition: background-color 0.2s, box-shadow 0.2s;
+      cursor: pointer;
+
+      &:hover {
+        background-color: #f9fafb;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+      }
+
+      &:nth-child(even) {
+        background-color: #ffffff; // Зробимо смужки менш контрастними
+      }
+      &:nth-child(odd) {
+        background-color: #fcfcfd;
+      }
+
+      td {
+        padding: 0.75rem 1rem;
+        border-bottom: 1px solid #f3f4f6; // Тонкий розділювач
+        vertical-align: middle;
+
+        &:last-child {
+          border-right: none;
+        }
+
+        img {
+          border-radius: 50%;
+          border: 2px solid #d1d5db; // М'яка рамка для аватара
+          object-fit: cover;
+        }
+
+        button {
+          min-width: 85px;
+          font-size: 0.8rem;
+          padding: 0.4rem 0.8rem;
+          border-radius: 20px; // Кругла форма (як у Favorites)
+          transition: all 0.2s;
+        }
+      }
+    }
+    // Прибираємо нижній бордер у останнього рядка
+    tr:last-child td {
+      border-bottom: none;
+    }
+  }
+}
+
+// === Кнопки Вибраного (Акцентні Кольори) ===
+.btn-warning { // Кнопка "Видалити" (Користувач у вибраному)
+  background-color: #f59e0b;
+  color: #fff; // Білий текст
+  border: none;
+
+  &:hover {
+    background-color: #d97706;
+    transform: scale(1.05);
+  }
+}
+
+.btn-outline-secondary { // Кнопка "Додати" (Користувач не у вибраному)
+  border: 1px solid #9ca3af;
+  color: #6b7280;
+  background: #fff;
+
+  &:hover {
+    background-color: #e5e7eb;
+    color: #374151;
+  }
+}
+
+// === Модальне Вікно (Попап) ===
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5); // Трохи прозоріше
+  z-index: 1000;
+}
+
+.modal-card {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: #fff;
+  z-index: 1001;
+  width: 90%;
+  max-width: 600px; // Трохи менша ширина для чистішого вигляду
+  padding: 1.5rem;
+  border-radius: 16px; // Більш округлі кути
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15); // М'яка, але помітна тінь
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  animation: fadeIn 0.3s ease-out;
+
+  .modal-header {
+    h5 {
+      font-weight: 700;
+      color: #1f2937;
+      margin: 0;
+    }
+
+    button {
+      // Кнопка закриття в header
+      background-color: #ef4444;
+      border: none;
+      color: white;
+      padding: 0.4rem 1rem;
+      border-radius: 8px;
+    }
+  }
+
+  .modal-body {
+    display: flex;
+    gap: 1.5rem;
+    align-items: flex-start;
+
+    img {
+      border-radius: 12px;
+      border: 1px solid #e5e7eb;
+      flex-shrink: 0;
+    }
+
+    div {
+      // Інформаційний блок
+      line-height: 1.6;
+      color: #374151;
+
+      p {
+        margin: 0.4rem 0;
+        font-size: 0.95rem;
+
+        strong {
+          color: #1f2937;
+        }
+      }
+    }
+  }
+
+  .modal-footer {
+    justify-content: flex-end;
+
+    .btn-primary {
+      // Кнопка "Додати/Видалити" у футері
+      background-color: #6366f1;
+      border: none;
+      color: white;
+      padding: 0.5rem 1.2rem;
+      border-radius: 8px;
+      font-weight: 600;
+
+      &:hover {
+        background-color: #4f46e5;
+      }
+    }
+  }
+}
+
+/* Анімація появи модалки */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -55%);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%);
+  }
+}
