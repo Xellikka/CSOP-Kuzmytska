@@ -1,0 +1,91 @@
+/* favorites.component.scss - Мінімалістичний Стиль */
+
+// === Базові Налаштування ===
+h4 {
+  font-weight: 700; // Трохи більш виділений заголовок
+  margin-bottom: 1.25rem;
+  color: #1e3a8a; // Глибокий, приємний синій колір
+  border-bottom: 2px solid #e0e7ff; // Тонка лінія під заголовком
+  padding-bottom: 0.5rem;
+}
+
+.text-muted {
+  font-style: italic;
+  color: #9ca3af !important; // Більш м'який сірий
+  padding: 1rem 0;
+  text-align: center;
+}
+
+// === Список Вибраного (List-Group) ===
+.list-group {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  // Додаємо невеликий тіньовий ефект до всього списку
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  border-radius: 12px;
+  overflow: hidden; // Щоб тіні та border-radius працювали коректно
+
+  .list-group-item {
+    display: flex;
+    align-items: center;
+    padding: 1rem 1.25rem; // Більше простору
+    margin-bottom: 0; // Прибираємо відступи між елементами
+    background-color: #ffffff;
+    border: none; // Прибираємо стандартні межі
+    border-bottom: 1px solid #f3f4f6; // Тонкий розділювач
+    transition: background-color 0.3s, transform 0.2s;
+
+    &:last-child {
+      border-bottom: none; // Прибираємо нижню межу в останнього елемента
+    }
+
+    &:hover {
+      background-color: #f9fafb; // Дуже світле підсвічування
+      transform: translateY(-1px); // Легкий підйом для візуального ефекту
+    }
+
+    // --- Аватар ---
+    img {
+      border-radius: 50%;
+      border: 3px solid #6366f1; // Приємний акцентний колір
+      object-fit: cover;
+      flex-shrink: 0; // Не дозволяти стискатися
+    }
+
+    // --- Текстовий Контент ---
+    .flex-grow-1 {
+      margin-left: 1rem;
+      line-height: 1.4; // Краща читабельність
+
+      div strong {
+        font-size: 1.05rem;
+        color: #1f2937; // Темний текст
+        font-weight: 600;
+      }
+
+      small {
+        color: #6b7280; // М'який підтекст
+        display: block; // Змушує маленьку мітку перейти на новий рядок
+      }
+    }
+
+    // --- Кнопка Видалення ---
+    button.btn-danger {
+      margin-left: 1rem;
+      font-size: 0.8rem;
+      padding: 0.4rem 0.8rem;
+      border-radius: 20px; // Кругла форма
+      background-color: #ef4444;
+      border-color: #ef4444;
+      transition: all 0.2s;
+      
+      &:hover {
+        background-color: #dc2626;
+        border-color: #dc2626;
+        opacity: 0.9;
+        transform: scale(1.02);
+      }
+    }
+  }
+}

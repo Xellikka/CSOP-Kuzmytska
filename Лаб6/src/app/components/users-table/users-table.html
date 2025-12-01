@@ -1,0 +1,68 @@
+<div class="mb-3 d-flex justify-content-between align-items-center">
+  <h3>Список виборців</h3>
+  <button class="btn btn-secondary" (click)="loadUsers()" [disabled]="loading">Оновити</button>
+</div>
+
+<div class="loading-indicator" *ngIf="loading">Завантаження...</div>
+<div class="alert alert-danger" *ngIf="errorMsg">{{errorMsg}}</div>
+
+<table class="table table-hover" *ngIf="users.length && !loading">
+  <thead>
+    <tr>
+      <th>Фото</th>
+      <th>Ім'я</th>
+      <th>Прізвище</th>
+      <th>Дата народження</th>
+      <th>Місто</th>
+      <th>Індекс</th>
+      <th>Вибране</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let u of users" (click)="openDetails(u)" style="cursor: pointer;">
+      <td><img [src]="u.picture?.thumbnail" alt="" width="48" height="48" class="rounded-circle"/></td>
+      <td>{{u.name.first}}</td>
+      <td>{{u.name.last}}</td>
+      <td>{{ formatDate(u.dob.date) }}</td>
+      <td>{{u.location.city}}</td>
+      <td>{{u.location.postcode}}</td>
+      <td (click)="$event.stopPropagation()">
+        <button class="btn btn-sm"
+                [class.btn-warning]="isFavorite(u)"
+                [class.btn-outline-secondary]="!isFavorite(u)"
+                (click)="toggleFavorite(u)">
+          {{ isFavorite(u) ? 'Видалити' : 'Додати' }}
+        </button>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- Простіший попап: базовий modal -->
+<div class="modal-backdrop" *ngIf="showModal" (click)="closeModal()"></div>
+<div class="modal-card" *ngIf="showModal" role="dialog" aria-modal="true">
+  <div class="modal-header d-flex justify-content-between align-items-center">
+    <h5>Деталі користувача</h5>
+    <button class="btn btn-sm btn-danger" (click)="closeModal()">Закрити</button>
+  </div>
+    <div class="modal-body" *ngIf="selectedUser as user">
+  <div class="d-flex gap-3">
+    <img [src]="user.picture?.large" alt="" width="120" height="120" class="rounded"/>
+    <div>
+      <p><strong>{{ user.name.title }} {{ user.name.first }} {{ user.name.last }}</strong></p>
+      <p>Дата народження: {{ formatDate(user.dob.date) }} ({{ user.dob.age }} років)</p>
+      <p>Стать: {{ user.gender }}</p>
+      <p>Ел. пошта: {{ user.email }}</p>
+      <p>Телефон: {{ user.phone }} / {{ user.cell }}</p>
+      <p>Адреса: {{ user.location.street?.number }} {{ user.location.street?.name }},
+         {{ user.location.city }}, {{ user.location.country }},
+         {{ user.location.postcode }}</p>
+    </div>
+  </div>
+</div>
+
+<div class="modal-footer" *ngIf="selectedUser as user">
+  <button class="btn btn-primary" (click)="toggleFavorite(user)">
+    {{ isFavorite(user) ? 'Видалити з вибраного' : 'Додати в вибране' }}
+  </button>
+</div>
